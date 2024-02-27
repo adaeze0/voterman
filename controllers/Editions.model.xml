@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataModel baseSchema="dbo" baseTable="Editions" alias="Editions" created="2024-01-15T22:55:17" modified="2024-01-19T08:57:39" x="20" y="20" xmlns="urn:schemas-codeontime-com:data-model">
+  <foreignKeys>
+    <foreignKey id="EditionStatus" parentTableSchema="dbo" parentTableName="EditionStatus" x="552" y="99">
+      <foreignKeyColumn columnName="EditionStatus" parentColumnName="EditionStatusID" />
+    </foreignKey>
+  </foreignKeys>
+  <columns>
+    <column name="EditionID" fieldName="EditionID" label="Edition ID" />
+    <column name="EditionName" fieldName="EditionName" label="Edition Name" />
+    <column name="EditionStatus" fieldName="EditionStatus" label="Edition Status" aliasColumnName="EditionStatus" aliasForeignKey="EditionStatus" />
+    <column name="EditionStatus" fieldName="EditionStatusEditionStatus" label="Edition Status Edition Status" foreignKey="EditionStatus" />
+  </columns>
+</dataModel>

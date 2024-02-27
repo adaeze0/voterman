@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataController name="Finalresults" conflictDetection="overwriteChanges" label="Finalresults" xmlns="urn:schemas-codeontime-com:data-aquarium">
+  <commands>
+    <command id="command1" type="Text">
+      <text><![CDATA[
+select
+	"finalresults"."finalresultsID" "FinalresultsID"
+	,"finalresults"."Firstplace" "Firstplace"
+	,"Projects"."ProjectName" "ProjectsProjectName"
+	,"Projects"."ProjectAuthor" "ProjectsProjectAuthor"
+	,"finalresults"."secondplace" "Secondplace"
+	,"finalresults"."Thirdplace" "Thirdplace"
+	,"finalresults"."NofVotes" "NofVotes"
+	,"finalresults"."editionID" "EditionID"
+	,"Editions"."EditionName" "EditionsEditionName"
+	,"finalresults"."placeid" "Placeid"
+	,"Place"."place" "Place"
+from "dbo"."finalresults" "finalresults"
+	left join "dbo"."Editions" "Editions" on "finalresults"."editionID" = "Editions"."EditionID"
+	left join "dbo"."Place" "Place" on "finalresults"."placeid" = "Place"."placeid"
+	left join "dbo"."Projects" "Projects" on "finalresults"."Firstplace" = "Projects"."ProjectID"
+]]></text>
+    </command>
+    <command id="finalresultsIDIdentityCommand" type="Text" event="Inserted">
+      <text><![CDATA[select @@identity]]></text>
+      <output>
+        <fieldOutput fieldName="FinalresultsID" />
+      </output>
+    </command>
+  </commands>
+  <fields>
+    <field name="FinalresultsID" type="Int32" allowNulls="false" isPrimaryKey="true" label="finalresults ID" readOnly="true" />
+    <field name="Firstplace" type="Int32" label="Firstplace" showInSummary="true">
+      <items style="Lookup" dataController="Projects" newDataView="createForm1" dataValueField="ProjectID" dataTextField="ProjectName" copy="ProjectsProjectAuthor=ProjectAuthor" />
+    </field>
+    <field name="ProjectsProjectName" type="String" readOnly="true" label="Projects Project Name" length="50" />
+    <field name="ProjectsProjectAuthor" type="String" readOnly="true" label="Projects Project Author" length="50" />
+    <field name="Secondplace" type="Int32" label="Secondplace" showInSummary="true" />
+    <field name="Thirdplace" type="Int32" label="Thirdplace" showInSummary="true" />
+    <field name="NofVotes" type="Int32" label="Nof Votes" showInSummary="true" />
+    <field name="EditionID" type="Int32" label="edition ID" showInSummary="true">
+      <items style="Lookup" dataController="Editions" newDataView="createForm1" dataValueField="EditionID" dataTextField="EditionName" />
+    </field>
+    <field name="EditionsEditionName" type="String" readOnly="true" label="Editions Edition Name" length="50" />
+    <field name="Placeid" type="Int32" label="Placeid">
+      <items style="Lookup" dataController="Place" newDataView="createForm1" dataValueField="Placeid" dataTextField="Place" />
+    </field>
+    <field name="Place" type="String" readOnly="true" label="Place" length="10" />
+  </fields>
+  <views>
+    <view id="grid1" type="Grid" commandId="command1" label="Finalresults" groupExpression="Placeid">
+      <headerText>$DefaultGridViewDescription</headerText>
+      <dataFields>
+        <dataField fieldName="Firstplace" aliasFieldName="ProjectsProjectName" />
+        <dataField fieldName="ProjectsProjectAuthor" columns="50" />
+        <dataField fieldName="NofVotes" columns="15" />
+        <dataField fieldName="EditionID" aliasFieldName="EditionsEditionName" />
+        <dataField fieldName="Placeid" aliasFieldName="Place" />
+      </dataFields>
+    </view>
+  </views>
+  <actions />
+</dataController>

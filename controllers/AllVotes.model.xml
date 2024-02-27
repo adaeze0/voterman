@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataModel baseSchema="dbo" baseTable="AllVotes" alias="AllVotes" created="2024-01-16T23:54:22" modified="2024-01-19T00:24:19" x="20" y="51" xmlns="urn:schemas-codeontime-com:data-model">
+  <foreignKeys>
+    <foreignKey id="Projects" parentTableSchema="dbo" parentTableName="Projects" x="673" y="56">
+      <foreignKeyColumn columnName="ProjectID" parentColumnName="ProjectID" />
+    </foreignKey>
+    <foreignKey id="Editions" parentTableSchema="dbo" parentTableName="Editions" x="386" y="20">
+      <foreignKeyColumn columnName="EditionID" parentColumnName="EditionID" />
+    </foreignKey>
+    <foreignKey id="Place" parentTableSchema="dbo" parentTableName="Place" x="508" y="217">
+      <foreignKeyColumn columnName="place" parentColumnName="placeid" />
+    </foreignKey>
+  </foreignKeys>
+  <columns>
+    <column name="AllVoteID" fieldName="AllVoteID" label="All Vote ID" />
+    <column name="VoteID" fieldName="VoteID" label="Vote ID" />
+    <column name="ProjectID" fieldName="ProjectID" label="Project ID" aliasColumnName="ProjectName" aliasForeignKey="Projects" />
+    <column name="ProjectName" fieldName="ProjectsProjectName" label="Projects Project Name" foreignKey="Projects" />
+    <column name="EditionID" fieldName="EditionID" label="Edition ID" aliasColumnName="EditionName" aliasForeignKey="Editions" />
+    <column name="EditionName" fieldName="EditionsEditionName" label="Editions Edition Name" foreignKey="Editions" />
+    <column name="EditionStatus" fieldName="EditionsEditionStatus" label="Editions Edition Status" foreignKey="Editions" />
+    <column name="VoteDate" fieldName="VoteDate" label="Vote Date" format="g" />
+    <column name="place" fieldName="Place" label="Place" aliasColumnName="place" aliasForeignKey="Place" />
+    <column name="place" fieldName="place1" label="Place" foreignKey="Place" />
+    <column name="userid" fieldName="Userid" label="Userid" />
+  </columns>
+</dataModel>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataModel baseSchema="dbo" baseTable="EditionStatus" alias="EditionStatus" created="2024-01-16T00:28:32" modified="2024-01-16T00:28:32" xmlns="urn:schemas-codeontime-com:data-model">
+  <foreignKeys />
+  <columns>
+    <column name="EditionStatusID" fieldName="EditionStatusID" label="Edition Status ID" />
+    <column name="EditionStatus" fieldName="EditionStatus" label="Edition Status" />
+  </columns>
+</dataModel>

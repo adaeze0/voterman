@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0">
+  <siteMapNode title="^SiteHome^Home^SiteHome^" description="" url="~/index.html">
+    <siteMapNode title="Editions" description="View Editions" url="~/pages/editions" roles="Administrators" />
+    <siteMapNode title="Projects" description="View Projects" url="~/pages/projects" />
+    <siteMapNode title="Voting Manager" description="" url="~/pages/voting-manager">
+      <siteMapNode title="VoteAProject" description="" url="~/pages/votes" roles="*" />
+      <siteMapNode title="Delete Votes" description="" url="~/pages/delete-votes" />
+      <siteMapNode title="Results" description="View Finalresults" url="~/pages/finalresults" />
+    </siteMapNode>
+    <siteMapNode title="User Manager" description="" url="~/pages/user-manager" roles="Administrators">
+      <siteMapNode title="^MembershipTitle^Membership Manager^MembershipTitle^" description="^MembershipDesc^User and role manager^MembershipDesc^" url="~/pages/membership" roles="Administrators" />
+    </siteMapNode>
+  </siteMapNode>
+</siteMap>

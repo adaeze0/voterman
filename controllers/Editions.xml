@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataController name="Editions" conflictDetection="overwriteChanges" label="Editions" xmlns="urn:schemas-codeontime-com:data-aquarium">
+  <commands>
+    <command id="command1" type="Text">
+      <text><![CDATA[
+select
+	"Editions"."EditionID" "EditionID"
+	,"Editions"."EditionName" "EditionName"
+	,"Editions"."EditionStatus" "EditionStatus"
+	,"EditionStatus"."EditionStatus" "EditionStatusEditionStatus"
+from "dbo"."Editions" "Editions"
+	left join "dbo"."EditionStatus" "EditionStatus" on "Editions"."EditionStatus" = "EditionStatus"."EditionStatusID"
+]]></text>
+    </command>
+    <command id="EditionIDIdentityCommand" type="Text" event="Inserted">
+      <text><![CDATA[select @@identity]]></text>
+      <output>
+        <fieldOutput fieldName="EditionID" />
+      </output>
+    </command>
+  </commands>
+  <fields>
+    <field name="EditionID" type="Int32" allowNulls="false" isPrimaryKey="true" label="Edition ID" readOnly="true" />
+    <field name="EditionName" type="String" allowNulls="false" label="Edition Name" length="50" showInSummary="true" />
+    <field name="EditionStatus" type="Int32" label="Edition Status" showInSummary="true">
+      <items style="DropDownList" dataController="EditionStatus" dataValueField="EditionStatusID" dataTextField="EditionStatus" />
+    </field>
+    <field name="EditionStatusEditionStatus" type="String" readOnly="true" label="Edition Status " length="50" />
+  </fields>
+  <views>
+    <view id="grid1" type="Grid" commandId="command1" label="Editions">
+      <headerText>$DefaultGridViewDescription</headerText>
+      <dataFields>
+        <dataField fieldName="EditionName" columns="50" />
+        <dataField fieldName="EditionStatus" aliasFieldName="EditionStatusEditionStatus" />
+      </dataFields>
+    </view>
+    <view id="editForm1" type="Form" commandId="command1" label="Review Editions">
+      <headerText>$DefaultEditViewDescription</headerText>
+      <categories>
+        <category id="c1" headerText="Editions" flow="NewColumn">
+          <description><![CDATA[$DefaultEditDescription]]></description>
+          <dataFields>
+            <dataField fieldName="EditionName" columns="50" />
+            <dataField fieldName="EditionStatus" aliasFieldName="EditionStatusEditionStatus" />
+          </dataFields>
+        </category>
+      </categories>
+    </view>
+    <view id="createForm1" type="Form" commandId="command1" label="New Editions">
+      <headerText>$DefaultCreateViewDescription</headerText>
+      <categories>
+        <category id="c1" flow="NewColumn">
+          <description><![CDATA[$DefaultNewDescription]]></description>
+          <dataFields>
+            <dataField fieldName="EditionName" columns="50" />
+            <dataField fieldName="EditionStatus" aliasFieldName="EditionStatusEditionStatus" />
+          </dataFields>
+        </category>
+      </categories>
+    </view>
+  </views>
+  <actions>
+    <actionGroup id="ag1" scope="Grid">
+      <action id="a1" commandName="Select" commandArgument="editForm1" />
+    </actionGroup>
+    <actionGroup id="ag2" scope="Form">
+      <action id="a1" commandName="Edit" />
+      <action id="a2" commandName="Delete" />
+      <action id="a3" commandName="Cancel" />
+      <action id="a4" whenLastCommandName="Edit" commandName="Update" commandArgument="Save" />
+      <action id="a5" whenLastCommandName="Edit" commandName="Cancel" />
+      <action id="a6" whenLastCommandName="New" commandName="Insert" commandArgument="Save" />
+      <action id="a7" whenLastCommandName="New" commandName="Insert" commandArgument="SaveAndNew" />
+      <action id="a8" whenLastCommandName="New" commandName="Cancel" />
+      <action id="a9" whenLastCommandName="Duplicate" commandName="Insert" />
+      <action id="a10" whenLastCommandName="Duplicate" commandName="Cancel" />
+      <action id="a13" whenLastCommandName="Insert" whenLastCommandArgument="Save" whenView="createForm1" commandName="Select" commandArgument="editForm1" whenClientScript="this.hasDetails()" />
+      <action id="a14" whenLastCommandName="Insert" whenLastCommandArgument="SaveAndNew" commandName="New" commandArgument="createForm1" />
+    </actionGroup>
+    <actionGroup id="ag3" scope="ActionBar" headerText="New Edition">
+      <action id="a1" commandName="New" commandArgument="createForm1" cssClass="NewIcon" />
+    </actionGroup>
+    <actionGroup id="ag4" scope="ActionBar" headerText="Edit/Delete">
+      <action id="a1" whenKeySelected="true" commandName="Edit" commandArgument="editForm1" cssClass="EditIcon" whenView="grid1" />
+      <action id="a2" whenKeySelected="true" commandName="Delete" cssClass="DeleteIcon" whenView="grid1" />
+    </actionGroup>
+  </actions>
+</dataController>

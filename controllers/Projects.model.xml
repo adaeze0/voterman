@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataModel baseSchema="dbo" baseTable="Projects" alias="Projects" created="2024-01-15T22:55:20" modified="2024-01-19T09:50:13" x="20" y="20" xmlns="urn:schemas-codeontime-com:data-model">
+  <foreignKeys>
+    <foreignKey id="Editions" parentTableSchema="dbo" parentTableName="Editions" x="334" y="105">
+      <foreignKeyColumn columnName="Edition" parentColumnName="EditionID" />
+    </foreignKey>
+  </foreignKeys>
+  <columns>
+    <column name="ProjectID" fieldName="ProjectID" label="Project ID" />
+    <column name="ProjectName" fieldName="ProjectName" label="Project Name" />
+    <column name="ProjectAuthor" fieldName="ProjectAuthor" label="Project Author" />
+    <column name="ProjectYear" fieldName="ProjectYear" label="Project Year" />
+    <column name="Edition" fieldName="Edition" label="Edition" aliasColumnName="EditionName" aliasForeignKey="Editions" />
+    <column name="EditionName" fieldName="EditionsEditionName" label="Editions Edition Name" foreignKey="Editions" />
+    <column name="EditionID" fieldName="EditionsEditionID" label="Editions Edition ID" foreignKey="Editions" />
+    <column name="EditionStatus" fieldName="EditionsEditionStatus" label="Editions Edition Status" foreignKey="Editions" />
+  </columns>
+</dataModel>

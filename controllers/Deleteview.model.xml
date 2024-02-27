@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataModel baseSchema="dbo" baseTable="deleteview" alias="deleteview" created="2024-01-16T20:23:25" modified="2024-01-16T20:56:04" x="20" y="20" xmlns="urn:schemas-codeontime-com:data-model">
+  <foreignKeys>
+    <foreignKey id="Users" parentTableSchema="dbo" parentTableName="Users" x="287" y="22">
+      <foreignKeyColumn columnName="FPUserID" parentColumnName="UserID" />
+    </foreignKey>
+    <foreignKey id="Users1" parentTableSchema="dbo" parentTableName="Users" x="258" y="69">
+      <foreignKeyColumn columnName="SPUserID" parentColumnName="UserID" />
+    </foreignKey>
+    <foreignKey id="Users2" parentTableSchema="dbo" parentTableName="Users" x="510" y="40">
+      <foreignKeyColumn columnName="TPUserID" parentColumnName="UserID" />
+    </foreignKey>
+    <foreignKey id="Projects" parentTableSchema="dbo" parentTableName="Projects" x="546" y="385">
+      <foreignKeyColumn columnName="SPProjectID" parentColumnName="ProjectID" />
+    </foreignKey>
+    <foreignKey id="Editions" parentTableSchema="dbo" parentTableName="Editions" x="737" y="39">
+      <foreignKeyColumn columnName="FPEditionID" parentColumnName="EditionID" />
+    </foreignKey>
+    <foreignKey id="Projects1" parentTableSchema="dbo" parentTableName="Projects" x="807" y="231">
+      <foreignKeyColumn columnName="FPProjectID" parentColumnName="ProjectID" />
+    </foreignKey>
+    <foreignKey id="Projects2" parentTableSchema="dbo" parentTableName="Projects" x="984" y="24">
+      <foreignKeyColumn columnName="TPProjectID" parentColumnName="ProjectID" />
+    </foreignKey>
+    <foreignKey id="Editions1" parentTableSchema="dbo" parentTableName="Editions" x="453" y="247">
+      <foreignKeyColumn columnName="SPEditionID" parentColumnName="EditionID" />
+    </foreignKey>
+    <foreignKey id="Editions2" parentTableSchema="dbo" parentTableName="Editions" x="247" y="281">
+      <foreignKeyColumn columnName="TPEditionID" parentColumnName="EditionID" />
+    </foreignKey>
+  </foreignKeys>
+  <columns>
+    <column name="UserName" fieldName="UsersUserName" label="Users User Name" foreignKey="Users" />
+    <column name="UserName" fieldName="Users1UserName" label="Users 1 User Name" foreignKey="Users1" />
+    <column name="UserName" fieldName="Users2UserName" label="Users 2 User Name" foreignKey="Users2" />
+    <column name="EditionName" fieldName="EditionsEditionName" label="Editions Edition Name" foreignKey="Editions" />
+    <column name="ProjectName" fieldName="ProjectsProjectName" label="Projects Project Name" foreignKey="Projects" />
+    <column name="ProjectName" fieldName="Projects2ProjectName" label="Projects 2 Project Name" foreignKey="Projects2" />
+    <column name="ProjectName" fieldName="Projects1ProjectName" label="Projects 1 Project Name" foreignKey="Projects1" />
+    <column name="EditionName" fieldName="Editions1EditionName" label="Editions 1 Edition Name" foreignKey="Editions1" />
+    <column name="EditionName" fieldName="Editions2EditionName" label="Editions 2 Edition Name" foreignKey="Editions2" />
+    <column name="FPVoteID" fieldName="FpvoteID" label="Fpvote ID" />
+    <column name="FPUserID" fieldName="FpuserID" label="Fpuser ID" />
+    <column name="FPDate" fieldName="Fpdate" label="Fpdate" format="g" />
+    <column name="SPUserID" fieldName="SpuserID" label="Spuser ID" />
+    <column name="SPVoteID" fieldName="SpvoteID" label="Spvote ID" />
+    <column name="FPProjectID" fieldName="FpprojectID" label="Fpproject ID" />
+    <column name="FPEditionID" fieldName="FpeditionID" label="Fpedition ID" />
+    <column name="SPProjectID" fieldName="SpprojectID" label="Spproject ID" />
+    <column name="SPEditionID" fieldName="SpeditionID" label="Spedition ID" />
+    <column name="TPVoteID" fieldName="TpvoteID" label="Tpvote ID" />
+    <column name="TPUserID" fieldName="TpuserID" label="Tpuser ID" />
+    <column name="TPProjectID" fieldName="TpprojectID" label="Tpproject ID" />
+    <column name="SPVoteDate" fieldName="SpvoteDate" label="Spvote Date" format="g" />
+    <column name="TPVoteDate" fieldName="TpvoteDate" label="Tpvote Date" format="g" />
+    <column name="TPEditionID" fieldName="TpeditionID" label="Tpedition ID" />
+  </columns>
+</dataModel>

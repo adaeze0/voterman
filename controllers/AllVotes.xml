@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataController name="AllVotes" conflictDetection="overwriteChanges" label="All Votes" xmlns="urn:schemas-codeontime-com:data-aquarium">
+  <commands>
+    <command id="command1" type="Text">
+      <text><![CDATA[
+select
+	"AllVotes"."AllVoteID" "AllVoteID"
+	,"AllVotes"."VoteID" "VoteID"
+	,"AllVotes"."ProjectID" "ProjectID"
+	,"Projects"."ProjectName" "ProjectsProjectName"
+	,"AllVotes"."EditionID" "EditionID"
+	,"Editions"."EditionName" "EditionsEditionName"
+	,"Editions"."EditionStatus" "EditionsEditionStatus"
+	,"AllVotes"."VoteDate" "VoteDate"
+	,"AllVotes"."place" "Place"
+	,"Place"."place" "place1"
+	,"AllVotes"."userid" "Userid"
+from "dbo"."AllVotes" "AllVotes"
+	left join "dbo"."Projects" "Projects" on "AllVotes"."ProjectID" = "Projects"."ProjectID"
+	left join "dbo"."Editions" "Editions" on "AllVotes"."EditionID" = "Editions"."EditionID"
+	left join "dbo"."Place" "Place" on "AllVotes"."place" = "Place"."placeid"
+]]></text>
+    </command>
+    <command id="AllVoteIDIdentityCommand" type="Text" event="Inserted">
+      <text><![CDATA[select @@identity]]></text>
+      <output>
+        <fieldOutput fieldName="AllVoteID" />
+      </output>
+    </command>
+  </commands>
+  <fields>
+    <field name="AllVoteID" type="Int32" allowNulls="false" isPrimaryKey="true" label="All Vote ID" readOnly="true" />
+    <field name="VoteID" type="Int32" allowNulls="false" label="Vote ID" showInSummary="true" />
+    <field name="ProjectID" type="Int32" allowNulls="false" label="Project ID" showInSummary="true">
+      <items dataController="Projects" dataValueField="ProjectID" />
+    </field>
+    <field name="ProjectsProjectName" type="String" readOnly="true" label="Projects Project Name" length="50" />
+    <field name="EditionID" type="Int32" allowNulls="false" label="Edition ID" showInSummary="true">
+      <items dataController="Editions" dataValueField="EditionID" dataTextField="EditionName" copy="EditionsEditionStatus=EditionStatus" />
+    </field>
+    <field name="EditionsEditionName" type="String" readOnly="true" label="Edition Name" length="50" />
+    <field name="EditionsEditionStatus" type="Int32" readOnly="true" label="Editions Edition Status" />
+    <field name="VoteDate" type="DateTime" dataFormatString="g" label="Vote Date" showInSummary="true" />
+    <field name="Place" type="Int32" label="Place" showInSummary="true">
+      <items dataController="Place" dataValueField="Placeid" dataTextField="Place" />
+    </field>
+    <field name="place1" type="String" readOnly="true" label="Place" length="10" />
+    <field name="Userid" type="Guid" label="Userid" />
+  </fields>
+  <views>
+    <view id="grid1" type="Grid" commandId="command1" label="DELETE VOTES" filter="Userid = @BusinessRules_UserId and EditionsEditionStatus = 1">
+      <headerText>WHY DID YOU CHANGE YOUR MIND???</headerText>
+      <dataFields>
+        <dataField fieldName="VoteID" columns="15" hidden="true" />
+        <dataField fieldName="ProjectID" aliasFieldName="ProjectsProjectName" />
+        <dataField fieldName="EditionID" aliasFieldName="EditionsEditionName" />
+        <dataField fieldName="VoteDate" columns="20" />
+        <dataField fieldName="Place" aliasFieldName="place1" />
+        <dataField fieldName="Userid" columns="15" hidden="true" />
+        <dataField fieldName="EditionsEditionStatus" columns="15" hidden="true" />
+      </dataFields>
+    </view>
+    <view id="editForm1" type="Form" commandId="command1" label="Review All Votes">
+      <headerText>YOUR VIEW</headerText>
+      <categories>
+        <category id="c1" headerText="All Votes" flow="NewColumn">
+          <description><![CDATA[$DefaultEditDescription]]></description>
+          <dataFields>
+            <dataField fieldName="VoteID" columns="15" hidden="true" />
+            <dataField fieldName="ProjectID" aliasFieldName="ProjectsProjectName" readOnly="true" />
+            <dataField fieldName="EditionID" aliasFieldName="EditionsEditionName" readOnly="true" />
+            <dataField fieldName="VoteDate" columns="20" readOnly="true" />
+            <dataField fieldName="Place" aliasFieldName="place1" readOnly="true" />
+          </dataFields>
+        </category>
+      </categories>
+    </view>
+    <view id="createForm1" type="Form" commandId="command1" label="New All Votes">
+      <headerText>$DefaultCreateViewDescription</headerText>
+      <categories>
+        <category id="c1" flow="NewColumn">
+          <description><![CDATA[$DefaultNewDescription]]></description>
+          <dataFields>
+            <dataField fieldName="VoteID" columns="15" />
+            <dataField fieldName="ProjectID" aliasFieldName="ProjectsProjectName" />
+            <dataField fieldName="EditionID" aliasFieldName="EditionsEditionName" />
+            <dataField fieldName="EditionsEditionStatus" columns="15" />
+            <dataField fieldName="VoteDate" columns="20" />
+            <dataField fieldName="Place" aliasFieldName="place1" />
+            <dataField fieldName="Userid" columns="15" />
+          </dataFields>
+        </category>
+      </categories>
+    </view>
+  </views>
+  <actions>
+    <actionGroup id="ag1" scope="Grid">
+      <action id="a1" commandName="Select" commandArgument="editForm1" headerText="View Vote Details" />
+      <action id="a3" commandName="SQL" headerText="Delete this vote">
+        <data><![CDATA[IF @Place = 1
+BEGIN
+delete from FirstPlaceVotes where VoteID = @VoteID
+delete from AllVotes where AllVoteID = @AllVoteID
+END
+ELSE IF @Place = 2
+BEGIN
+delete from SecondPlaceVotes where VoteID = @VoteID
+delete from AllVotes where AllVoteID = @AllVoteID
+END
+ELSE IF @Place = 3
+BEGIN
+delete from ThirdPlaceVotes where VoteID = @VoteID
+delete from AllVotes where AllVoteID = @AllVoteID
+END]]></data>
+      </action>
+    </actionGroup>
+  </actions>
+</dataController>

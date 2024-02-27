@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Login</title>
+</head>
+<body class="HomePage Wide Tall">
+    <div data-app-role="page" data-content-framework="bootstrap">
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Login here</span>
+                </div>
+                <div class="navbar-collapse">
+                    <div class="navbar-form navbar-right" role="form">
+                        <div class="form-group">
+                            <input id="login-user-name" type="text" placeholder="Username" class="form-control" autocapitalize="off">
+                        </div>
+                        <div class="form-group">
+                            <input id="login-password" type="password" placeholder="Password" class="form-control">
+                        </div>
+                        <button id="login-button" class="btn btn-success">Sign in</button>
+                    </div>
+                </div>
+                <!--/.navbar-collapse -->
+            </div>
+        </div>
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+                  
+    </div>
+
+
+    <script type="text/javascript">
+        (function () {
+            var resources = Web.MembershipResources.Messages;
+
+            function performLogin(username, password) {
+
+                var userNameElem = $('#login-user-name'),
+                    passwordElem = $('#login-password');
+
+                if (!username)
+                    username = userNameElem.val();
+                if (!password)
+                    password = passwordElem.val();
+
+                if (!username)
+                    $app.alert(resources.BlankUserName, function () {
+                        userNameElem.focus();
+                    });
+                else if (!password)
+                    $app.alert(resources.BlankPassword, function () {
+                        passwordElem.focus();
+                    });
+                else
+                    $app.login(username, password, true,
+                        function () {
+                            setTimeout(function () {
+                                $app._navigated = true;
+                                // Option #1 - navigate to the protected page specified in ReturnUrl 
+                                //var returnUrl = window.location.href.match(/\?ReturnUrl=(.+)$/);
+                                //window.location.replace(returnUrl && decodeURIComponent(returnUrl[1]) || __baseUrl);
+
+                                // Option #2 - always allow the app to choose the landing page after the successful login
+                                window.location.replace(__baseUrl);
+                            });
+                        },
+                        function () {
+                            $app.alert(resources.InvalidUserNameAndPassword, function () {
+                                userNameElem.focus();
+                            });
+                        });
+                return false;
+            }
+
+            $(document)
+                .on('click', '#login-button', function () {
+                    performLogin();
+                })
+                .on('click', '#admin-login', function () {
+                    performLogin('admin', 'admin123%');
+                })
+                .on('click', '#user-login', function () {
+                    performLogin('user', 'user123%');
+                })
+                .on('keydown', 'input', function (event) {
+                    if (event.which == 13) {
+                        event.preventDefault();
+                        performLogin();
+                        return false;
+                    }
+                });
+        })();
+    </script>
+</body>
+</html>

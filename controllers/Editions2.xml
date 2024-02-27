@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataController name="Editions2" label="Editions2" conflictDetection="overwriteChanges" xmlns="urn:schemas-codeontime-com:data-aquarium">
+  <commands>
+    <command id="command1" type="Text">
+      <text><![CDATA[
+select
+	"Editions"."EditionID" "EditionID"
+	,"Editions"."EditionName" "EditionName"
+	,"Editions"."EditionStatus" "EditionStatus"
+	,"EditionStatus"."EditionStatus" "EditionStatusEditionStatus"
+from "dbo"."Editions" "Editions"
+	left join "dbo"."EditionStatus" "EditionStatus" on "Editions"."EditionStatus" = "EditionStatus"."EditionStatusID"
+]]></text>
+    </command>
+    <command id="EditionIDIdentityCommand" type="Text" event="Inserted">
+      <text><![CDATA[select @@identity]]></text>
+      <output>
+        <fieldOutput fieldName="EditionID" />
+      </output>
+    </command>
+  </commands>
+  <fields>
+    <field name="EditionID" type="Int32" allowNulls="false" isPrimaryKey="true" label="Edition ID" readOnly="true" />
+    <field name="EditionName" type="String" allowNulls="false" label="Edition Name" length="50" showInSummary="true" />
+    <field name="EditionStatus" type="Int32" label="Edition Status" showInSummary="true">
+      <items style="Lookup" dataController="EditionStatus" newDataView="createForm1" dataValueField="EditionStatusID" dataTextField="EditionStatus" />
+    </field>
+    <field name="EditionStatusEditionStatus" type="String" readOnly="true" label="Edition Status Edition Status" length="50" />
+  </fields>
+  <views>
+    <view id="grid1" type="Grid" commandId="command1" label="Editions">
+      <headerText>$DefaultGridViewDescription</headerText>
+      <dataFields>
+        <dataField fieldName="EditionName" columns="50" />
+        <dataField fieldName="EditionStatus" aliasFieldName="EditionStatusEditionStatus" hidden="true" />
+        <dataField fieldName="EditionID" columns="15" hidden="true" />
+      </dataFields>
+    </view>
+  </views>
+  <actions>
+    <actionGroup id="ag1" scope="Grid">
+      <action commandName="SQL" headerText="Generate Result" id="a101">
+        <data><![CDATA[exec proc_getresults @EditionID]]></data>
+      </action>
+      <action commandName="Navigate" headerText="View Results" id="a100" commandArgument="NavigateResultsPage.aspx?_controller=Finalresults&amp;EditionID={EditionID}&amp;_commandName=Select&amp;_commandArgument=grid1">
+        <data><![CDATA[exec proc_getresults @EditionID]]></data>
+      </action>
+    </actionGroup>
+  </actions>
+  <businessRules />
+</dataController>

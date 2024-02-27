@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataModel baseSchema="dbo" baseTable="finalresults" alias="finalresults" created="2024-01-19T01:56:42" modified="2024-01-19T12:43:36" x="20" y="20" xmlns="urn:schemas-codeontime-com:data-model">
+  <foreignKeys>
+    <foreignKey id="Editions" parentTableSchema="dbo" parentTableName="Editions" x="543" y="23">
+      <foreignKeyColumn columnName="editionID" parentColumnName="EditionID" />
+    </foreignKey>
+    <foreignKey id="Place" parentTableSchema="dbo" parentTableName="Place" x="458" y="184">
+      <foreignKeyColumn columnName="placeid" parentColumnName="placeid" />
+    </foreignKey>
+    <foreignKey id="Projects" parentTableSchema="dbo" parentTableName="Projects" x="805" y="198">
+      <foreignKeyColumn columnName="Firstplace" parentColumnName="ProjectID" />
+    </foreignKey>
+  </foreignKeys>
+  <columns>
+    <column name="finalresultsID" fieldName="FinalresultsID" label="finalresults ID" />
+    <column name="Firstplace" fieldName="Firstplace" label="Firstplace" aliasColumnName="ProjectName" aliasForeignKey="Projects" />
+    <column name="ProjectName" fieldName="ProjectsProjectName" label="Projects Project Name" foreignKey="Projects" />
+    <column name="ProjectAuthor" fieldName="ProjectsProjectAuthor" label="Projects Project Author" foreignKey="Projects" />
+    <column name="secondplace" fieldName="Secondplace" label="Secondplace" />
+    <column name="Thirdplace" fieldName="Thirdplace" label="Thirdplace" />
+    <column name="NofVotes" fieldName="NofVotes" label="Nof Votes" />
+    <column name="editionID" fieldName="EditionID" label="edition ID" aliasColumnName="EditionName" aliasForeignKey="Editions" />
+    <column name="EditionName" fieldName="EditionsEditionName" label="Editions Edition Name" foreignKey="Editions" />
+    <column name="placeid" fieldName="Placeid" label="Placeid" aliasColumnName="place" aliasForeignKey="Place" />
+    <column name="place" fieldName="Place" label="Place" foreignKey="Place" />
+  </columns>
+</dataModel>

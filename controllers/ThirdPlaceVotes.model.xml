@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataModel baseSchema="dbo" baseTable="ThirdPlaceVotes" alias="ThirdPlaceVotes" created="2024-01-15T22:55:24" modified="2024-01-15T22:55:24" xmlns="urn:schemas-codeontime-com:data-model">
+  <foreignKeys />
+  <columns>
+    <column name="VoteID" fieldName="VoteID" label="Vote ID" />
+    <column name="ProjectID" fieldName="ProjectID" label="Project ID" />
+    <column name="EditionID" fieldName="EditionID" label="Edition ID" />
+  </columns>
+</dataModel>

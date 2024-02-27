@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataModel baseSchema="dbo" baseTable="Roles" alias="Roles" created="2024-01-15T23:08:03" modified="2024-01-15T23:08:03" xmlns="urn:schemas-codeontime-com:data-model">
+  <foreignKeys />
+  <columns>
+    <column name="RoleID" fieldName="RoleID" label="Role ID" />
+    <column name="RoleName" fieldName="RoleName" label="Role Name" />
+  </columns>
+</dataModel>

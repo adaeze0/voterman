@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataController name="VoteProject" label="VoteProject" conflictDetection="overwriteChanges" xmlns="urn:schemas-codeontime-com:data-aquarium">
+  <commands>
+    <command id="command1" type="Text">
+      <text><![CDATA[
+select
+	"Projects"."ProjectID" "ProjectID"
+	,"Projects"."ProjectName" "ProjectName"
+	,"Projects"."ProjectAuthor" "ProjectAuthor"
+	,"Projects"."ProjectYear" "ProjectYear"
+	,"Projects"."Edition" "Edition"
+	,"Editions"."EditionName" "EditionsEditionName"
+	,"Editions"."EditionID" "EditionsEditionID"
+	,"Editions"."EditionStatus" "EditionsEditionStatus"
+from "dbo"."Projects" "Projects"
+	left join "dbo"."Editions" "Editions" on "Projects"."Edition" = "Editions"."EditionID"
+]]></text>
+    </command>
+    <command id="ProjectIDIdentityCommand" type="Text" event="Inserted">
+      <text><![CDATA[select @@identity]]></text>
+      <output>
+        <fieldOutput fieldName="ProjectID" />
+      </output>
+    </command>
+  </commands>
+  <fields>
+    <field name="ProjectID" type="Int32" allowNulls="false" isPrimaryKey="true" label="Project ID" readOnly="true" />
+    <field name="ProjectName" type="String" label="Project Name" length="50" showInSummary="true" />
+    <field name="ProjectAuthor" type="String" label="Project Author" length="50" showInSummary="true" />
+    <field name="ProjectYear" type="Int32" label="Project Year" showInSummary="true" />
+    <field name="Edition" type="Int32" label="Edition" showInSummary="true">
+      <items style="Lookup" dataController="Editions" newDataView="createForm1" dataValueField="EditionID" dataTextField="EditionName" copy="EditionsEditionID=EditionID, EditionsEditionStatus=EditionStatus" />
+    </field>
+    <field name="EditionsEditionName" type="String" readOnly="true" label="Edition Name" length="50" />
+    <field name="EditionsEditionID" type="Int32" label="Editions Edition ID" readOnly="true" />
+    <field name="EditionsEditionStatus" type="Int32" readOnly="true" label="Editions Edition Status" />
+  </fields>
+  <views>
+    <view id="grid1" type="Grid" commandId="command1" label="Projects" filter="EditionsEditionStatus = 1">
+      <headerText />
+      <dataFields>
+        <dataField fieldName="ProjectName" columns="50" />
+        <dataField fieldName="ProjectAuthor" columns="50" />
+        <dataField fieldName="ProjectYear" columns="15" />
+        <dataField fieldName="Edition" aliasFieldName="EditionsEditionName" />
+        <dataField fieldName="EditionsEditionID" columns="15" hidden="true" />
+        <dataField fieldName="EditionsEditionStatus" columns="15" hidden="true" />
+      </dataFields>
+    </view>
+    <view id="editForm1" type="Form" commandId="command1" label="Review Projects">
+      <headerText>$DefaultEditViewDescription</headerText>
+      <categories>
+        <category id="c1" headerText="Projects" flow="NewColumn">
+          <description><![CDATA[$DefaultEditDescription]]></description>
+          <dataFields>
+            <dataField fieldName="ProjectName" columns="50" />
+            <dataField fieldName="ProjectAuthor" columns="50" />
+            <dataField fieldName="ProjectYear" columns="15" />
+            <dataField fieldName="Edition" aliasFieldName="EditionsEditionName" />
+            <dataField fieldName="EditionsEditionID" columns="15" />
+            <dataField fieldName="EditionsEditionStatus" columns="15" />
+          </dataFields>
+        </category>
+      </categories>
+    </view>
+  </views>
+  <actions>
+    <actionGroup id="ag1" scope="Grid">
+      <action commandName="SQL" headerText="Vote First Place" id="a100" confirmation="SURE? " commandArgument="VoteFirstPlace">
+        <data><![CDATA[IF EXISTS (
+    SELECT 1
+    FROM FirstPlaceVotes
+    WHERE UserId = @BusinessRules_UserId
+        AND EditionID = @Edition
+)
+BEGIN
+set @Result_ShowViewMessage = 'This user has already voted'
+END
+
+ELSE
+
+BEGIN
+insert into FirstPlaceVotes(UserID, ProjectID, EditionID, VoteDate)
+select @BusinessRules_UserId, @ProjectID, @Edition, CURRENT_TIMESTAMP 
+from Projects where ProjectID = @ProjectID
+set @Result_ShowViewMessage = 'Voted Successfully'
+END]]></data>
+      </action>
+      <action commandName="SQL" headerText="Vote Second Place" id="a101" confirmation="SURE??" commandArgument="VoteSecondPlace">
+        <data><![CDATA[IF EXISTS (
+    SELECT 1
+    FROM SecondPlaceVotes
+    WHERE UserId = @BusinessRules_UserId
+        AND EditionID = @Edition
+)
+BEGIN
+set @Result_ShowViewMessage = 'This user has already voted'
+END
+
+ELSE
+
+BEGIN
+insert into SecondPlaceVotes(UserID, ProjectID, EditionID, VoteDate)
+select @BusinessRules_UserId, @ProjectID, @Edition, CURRENT_TIMESTAMP 
+from Projects where ProjectID = @ProjectID
+set @Result_ShowViewMessage = 'Voted Successfully'
+END]]></data>
+      </action>
+      <action commandName="SQL" headerText="Vote Third Place" id="a102" commandArgument="VoteThirdPlace" confirmation="SURE??">
+        <data><![CDATA[IF EXISTS (
+    SELECT 1
+    FROM ThirdPlaceVotes
+    WHERE UserId = @BusinessRules_UserId
+        AND EditionID = @Edition
+)
+BEGIN
+set @Result_ShowViewMessage = 'This user has already voted'
+END
+
+ELSE
+
+BEGIN
+insert into ThirdPlaceVotes(UserID, ProjectID, EditionID, VoteDate)
+select @BusinessRules_UserId, @ProjectID, @Edition, CURRENT_TIMESTAMP 
+from Projects where ProjectID = @ProjectID
+set @Result_ShowViewMessage = 'Voted Successfully'
+END]]></data>
+      </action>
+    </actionGroup>
+  </actions>
+  <businessRules />
+</dataController>

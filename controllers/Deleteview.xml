@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataController name="Deleteview" conflictDetection="overwriteChanges" label="Deleteview" xmlns="urn:schemas-codeontime-com:data-aquarium">
+  <commands>
+    <command id="command1" type="Text">
+      <text><![CDATA[
+select
+	"Users"."UserName" "UsersUserName"
+	,"Users1"."UserName" "Users1UserName"
+	,"Users2"."UserName" "Users2UserName"
+	,"Editions"."EditionName" "EditionsEditionName"
+	,"Projects"."ProjectName" "FirstPlaceVote"
+	,"Projects2"."ProjectName" "SecondPlaceVotes"
+	,"Projects1"."ProjectName" "ThirdPlaceVotes"
+	,"Editions1"."EditionName" "Editions1EditionName"
+	,"Editions2"."EditionName" "Editions2EditionName"
+	,"deleteview"."FPVoteID" "FpvoteID"
+	,"deleteview"."FPUserID" "FpuserID"
+	,"deleteview"."FPDate" "Fpdate"
+	,"deleteview"."SPUserID" "SpuserID"
+	,"deleteview"."SPVoteID" "SpvoteID"
+	,"deleteview"."FPProjectID" "FpprojectID"
+	,"deleteview"."FPEditionID" "FpeditionID"
+	,"deleteview"."SPProjectID" "SpprojectID"
+	,"deleteview"."SPEditionID" "SpeditionID"
+	,"deleteview"."TPVoteID" "TpvoteID"
+	,"deleteview"."TPUserID" "TpuserID"
+	,"deleteview"."TPProjectID" "TpprojectID"
+	,"deleteview"."SPVoteDate" "SpvoteDate"
+	,"deleteview"."TPVoteDate" "TpvoteDate"
+	,"deleteview"."TPEditionID" "TpeditionID"
+from "dbo"."deleteview" "deleteview"
+	left join "dbo"."Users" "Users" on "deleteview"."FPUserID" = "Users"."UserID"
+	left join "dbo"."Users" "Users1" on "deleteview"."SPUserID" = "Users1"."UserID"
+	left join "dbo"."Users" "Users2" on "deleteview"."TPUserID" = "Users2"."UserID"
+	left join "dbo"."Projects" "Projects" on "deleteview"."SPProjectID" = "Projects"."ProjectID"
+	left join "dbo"."Editions" "Editions" on "deleteview"."FPEditionID" = "Editions"."EditionID"
+	left join "dbo"."Projects" "Projects1" on "deleteview"."FPProjectID" = "Projects1"."ProjectID"
+	left join "dbo"."Projects" "Projects2" on "deleteview"."TPProjectID" = "Projects2"."ProjectID"
+	left join "dbo"."Editions" "Editions1" on "deleteview"."SPEditionID" = "Editions1"."EditionID"
+	left join "dbo"."Editions" "Editions2" on "deleteview"."TPEditionID" = "Editions2"."EditionID"
+]]></text>
+    </command>
+  </commands>
+  <fields>
+    <field name="UsersUserName" type="String" readOnly="true" label="Users User Name" length="128" />
+    <field name="Users1UserName" type="String" readOnly="true" label="Users 1 User Name" length="128" />
+    <field name="Users2UserName" type="String" readOnly="true" label="Users 2 User Name" length="128" />
+    <field name="EditionsEditionName" type="String" readOnly="true" label="Editions Edition Name" length="50" />
+    <field name="SecondPlaceVotes" type="String" readOnly="true" label="Projects 2 Project Name" length="50" />
+    <field name="ThirdPlaceVotes" type="String" readOnly="true" label="Projects 1 Project Name" length="50" />
+    <field name="Editions1EditionName" type="String" readOnly="true" label="Editions 1 Edition Name" length="50" />
+    <field name="Editions2EditionName" type="String" readOnly="true" label="Editions 2 Edition Name" length="50" />
+    <field name="FpvoteID" type="Int32" allowNulls="false" label="Fpvote ID" showInSummary="true" />
+    <field name="FirstPlaceVote" type="String" readOnly="true" label="Projects Project Name" length="50" />
+    <field name="FpuserID" type="Int32" allowNulls="false" label="Fpuser ID" showInSummary="true">
+      <items style="Lookup" dataController="Users" newDataView="createForm1" dataValueField="UserID" dataTextField="UserID" copy="UsersUserName=UserName" />
+    </field>
+    <field name="Fpdate" type="DateTime" dataFormatString="g" label="Fpdate" showInSummary="true" />
+    <field name="SpuserID" type="Int32" allowNulls="false" label="Spuser ID" showInSummary="true">
+      <items style="Lookup" dataController="Users" newDataView="createForm1" dataValueField="UserID" dataTextField="UserID" copy="Users1UserName=UserName" />
+    </field>
+    <field name="SpvoteID" type="Int32" allowNulls="false" label="Spvote ID" showInSummary="true" />
+    <field name="FpprojectID" type="Int32" allowNulls="false" label="Fpproject ID">
+      <items style="Lookup" dataController="Projects" newDataView="createForm1" dataValueField="ProjectID" dataTextField="ProjectID" copy="Projects1ProjectName=ProjectName" />
+    </field>
+    <field name="FpeditionID" type="Int32" allowNulls="false" label="Fpedition ID">
+      <items style="Lookup" dataController="Editions" newDataView="createForm1" dataValueField="EditionID" dataTextField="EditionID" copy="EditionsEditionName=EditionName" />
+    </field>
+    <field name="SpprojectID" type="Int32" allowNulls="false" label="Spproject ID">
+      <items style="Lookup" dataController="Projects" newDataView="createForm1" dataValueField="ProjectID" dataTextField="ProjectID" copy="ProjectsProjectName=ProjectName" />
+    </field>
+    <field name="SpeditionID" type="Int32" allowNulls="false" label="Spedition ID">
+      <items style="Lookup" dataController="Editions" newDataView="createForm1" dataValueField="EditionID" dataTextField="EditionID" copy="Editions1EditionName=EditionName" />
+    </field>
+    <field name="TpvoteID" type="Int32" allowNulls="false" label="Tpvote ID" />
+    <field name="TpuserID" type="Int32" allowNulls="false" label="Tpuser ID">
+      <items style="Lookup" dataController="Users" newDataView="createForm1" dataValueField="UserID" dataTextField="UserID" copy="Users2UserName=UserName" />
+    </field>
+    <field name="TpprojectID" type="Int32" allowNulls="false" label="Tpproject ID">
+      <items style="Lookup" dataController="Projects" newDataView="createForm1" dataValueField="ProjectID" dataTextField="ProjectID" copy="Projects2ProjectName=ProjectName" />
+    </field>
+    <field name="SpvoteDate" type="DateTime" dataFormatString="g" label="Spvote Date" />
+    <field name="TpvoteDate" type="DateTime" dataFormatString="g" label="Tpvote Date" />
+    <field name="TpeditionID" type="Int32" allowNulls="false" label="Tpedition ID">
+      <items style="Lookup" dataController="Editions" newDataView="createForm1" dataValueField="EditionID" dataTextField="EditionID" copy="Editions2EditionName=EditionName" />
+    </field>
+  </fields>
+  <views>
+    <view id="grid1" type="Grid" commandId="command1" label="Deleteview">
+      <headerText>$DefaultGridViewDescription</headerText>
+      <dataFields>
+        <dataField fieldName="FirstPlaceVote" columns="50" />
+        <dataField fieldName="SecondPlaceVotes" columns="50" />
+        <dataField fieldName="ThirdPlaceVotes" columns="50" />
+      </dataFields>
+    </view>
+    <view id="editForm1" type="Form" commandId="command1" label="Review Deleteview">
+      <headerText>$DefaultEditViewDescription</headerText>
+      <categories>
+        <category id="c1" headerText="Deleteview" flow="NewColumn">
+          <description><![CDATA[$DefaultEditDescription]]></description>
+          <dataFields>
+            <dataField fieldName="UsersUserName" />
+            <dataField fieldName="Users1UserName" />
+            <dataField fieldName="Users2UserName" />
+            <dataField fieldName="EditionsEditionName" columns="50" />
+            <dataField fieldName="FirstPlaceVote" columns="50" />
+            <dataField fieldName="SecondPlaceVotes" columns="50" />
+            <dataField fieldName="ThirdPlaceVotes" columns="50" />
+            <dataField fieldName="Editions1EditionName" columns="50" />
+            <dataField fieldName="Editions2EditionName" columns="50" />
+            <dataField fieldName="FpvoteID" columns="15" />
+            <dataField fieldName="FpuserID" columns="15" />
+            <dataField fieldName="Fpdate" columns="20" />
+            <dataField fieldName="SpuserID" columns="15" />
+            <dataField fieldName="SpvoteID" columns="15" />
+            <dataField fieldName="FpprojectID" columns="15" />
+            <dataField fieldName="FpeditionID" columns="15" />
+            <dataField fieldName="SpprojectID" columns="15" />
+            <dataField fieldName="SpeditionID" columns="15" />
+            <dataField fieldName="TpvoteID" columns="15" />
+            <dataField fieldName="TpuserID" columns="15" />
+            <dataField fieldName="TpprojectID" columns="15" />
+            <dataField fieldName="SpvoteDate" columns="20" />
+            <dataField fieldName="TpvoteDate" columns="20" />
+            <dataField fieldName="TpeditionID" columns="15" />
+          </dataFields>
+        </category>
+      </categories>
+    </view>
+    <view id="createForm1" type="Form" commandId="command1" label="New Deleteview">
+      <headerText>$DefaultCreateViewDescription</headerText>
+      <categories>
+        <category id="c1" flow="NewColumn">
+          <description><![CDATA[$DefaultNewDescription]]></description>
+          <dataFields>
+            <dataField fieldName="UsersUserName" />
+            <dataField fieldName="Users1UserName" />
+            <dataField fieldName="Users2UserName" />
+            <dataField fieldName="EditionsEditionName" columns="50" />
+            <dataField fieldName="FirstPlaceVote" columns="50" />
+            <dataField fieldName="SecondPlaceVotes" columns="50" />
+            <dataField fieldName="ThirdPlaceVotes" columns="50" />
+            <dataField fieldName="Editions1EditionName" columns="50" />
+            <dataField fieldName="Editions2EditionName" columns="50" />
+            <dataField fieldName="FpvoteID" columns="15" />
+            <dataField fieldName="FpuserID" columns="15" />
+            <dataField fieldName="Fpdate" columns="20" />
+            <dataField fieldName="SpuserID" columns="15" />
+            <dataField fieldName="SpvoteID" columns="15" />
+            <dataField fieldName="FpprojectID" columns="15" />
+            <dataField fieldName="FpeditionID" columns="15" />
+            <dataField fieldName="SpprojectID" columns="15" />
+            <dataField fieldName="SpeditionID" columns="15" />
+            <dataField fieldName="TpvoteID" columns="15" />
+            <dataField fieldName="TpuserID" columns="15" />
+            <dataField fieldName="TpprojectID" columns="15" />
+            <dataField fieldName="SpvoteDate" columns="20" />
+            <dataField fieldName="TpvoteDate" columns="20" />
+            <dataField fieldName="TpeditionID" columns="15" />
+          </dataFields>
+        </category>
+      </categories>
+    </view>
+  </views>
+  <actions>
+    <actionGroup id="ag1" scope="Grid">
+      <action id="a1" commandName="Select" commandArgument="editForm1" />
+      <action id="a2" commandName="Edit" />
+      <action id="a3" commandName="Delete" />
+      <action id="a6" />
+      <action id="a7" commandName="New" commandArgument="grid1" />
+      <action id="a8" commandName="Duplicate" commandArgument="createForm1" />
+      <action commandName="Custom" headerText="Delete Votes" confirmation="You are deleting all your votes for this edition" id="a100">
+        <data><![CDATA[delete from FirstPlaceVotes where VoteID = @FpvoteID
+delete from SecondPlaceVotes where VoteID = @SpvoteID
+delete from ThirdPlaceVotes where VoteID = @TpvoteID]]></data>
+      </action>
+    </actionGroup>
+    <actionGroup id="ag2" scope="Form">
+      <action id="a1" commandName="Edit" />
+      <action id="a2" commandName="Delete" />
+      <action id="a3" commandName="Cancel" />
+      <action id="a4" whenLastCommandName="Edit" commandName="Update" commandArgument="Save" />
+      <action id="a5" whenLastCommandName="Edit" commandName="Cancel" />
+      <action id="a6" whenLastCommandName="New" commandName="Insert" commandArgument="Save" />
+      <action id="a7" whenLastCommandName="New" commandName="Insert" commandArgument="SaveAndNew" />
+      <action id="a8" whenLastCommandName="New" commandName="Cancel" />
+      <action id="a9" whenLastCommandName="Duplicate" commandName="Insert" />
+      <action id="a10" whenLastCommandName="Duplicate" commandName="Cancel" />
+      <action id="a13" whenLastCommandName="Insert" whenLastCommandArgument="Save" whenView="createForm1" commandName="Select" commandArgument="editForm1" whenClientScript="this.hasDetails()" />
+      <action id="a14" whenLastCommandName="Insert" whenLastCommandArgument="SaveAndNew" commandName="New" commandArgument="createForm1" />
+    </actionGroup>
+    <actionGroup id="ag3" scope="ActionBar" headerText="New" flat="true">
+      <action id="a1" commandName="New" commandArgument="createForm1" cssClass="NewIcon" />
+    </actionGroup>
+    <actionGroup id="ag4" scope="ActionBar" headerText="Edit/Delete" flat="true">
+      <action id="a1" whenKeySelected="true" commandName="Edit" commandArgument="editForm1" cssClass="EditIcon" whenView="grid1" />
+      <action id="a2" whenKeySelected="true" commandName="Delete" cssClass="DeleteIcon" whenView="grid1" />
+    </actionGroup>
+    <actionGroup id="ag5" scope="ActionBar" headerText="Actions">
+      <action id="a1" commandName="ExportCsv" />
+      <action id="a2" />
+      <action id="a3" commandName="ExportRowset" />
+      <action id="a4" commandName="ExportRss" />
+      <action id="a7" commandName="DataSheet" />
+      <action id="a8" commandName="Grid" />
+    </actionGroup>
+    <actionGroup id="ag6" scope="ActionBar" headerText="Record">
+      <action id="a1" whenLastCommandName="Edit" commandName="Update" />
+      <action id="a2" whenLastCommandName="Edit" commandName="Cancel" />
+      <action id="a3" whenLastCommandName="New" commandName="Insert" />
+      <action id="a4" whenLastCommandName="New" commandName="Cancel" />
+    </actionGroup>
+    <actionGroup id="ag7" scope="ActionBar" headerText="Report">
+      <action id="a1" commandName="ReportAsPdf" />
+      <action id="a2" commandName="ReportAsImage" />
+      <action id="a3" commandName="ReportAsExcel" />
+      <action id="a4" commandName="ReportAsWord" />
+    </actionGroup>
+    <actionGroup id="ag8" scope="Row">
+      <action id="a4" whenLastCommandName="Edit" commandName="Update" />
+      <action id="a5" whenLastCommandName="Edit" commandName="Cancel" />
+      <action id="a6" whenLastCommandName="New" commandName="Insert" />
+      <action id="a7" whenLastCommandName="New" commandName="Cancel" />
+    </actionGroup>
+    <actionGroup id="ag100" scope="ActionBar" headerText="DELETE VOTES" flat="false">
+      <action commandName="Custom" headerText="Delete Votes" confirmation="You are deleting all your votes for this edition" id="a100">
+        <data><![CDATA[delete from FirstPlaceVotes where VoteID = @FpvoteID
+delete from SecondPlaceVotes where VoteID = @SpvoteID
+delete from ThirdPlaceVotes where VoteID = @TpvoteID]]></data>
+      </action>
+    </actionGroup>
+  </actions>
+</dataController>
